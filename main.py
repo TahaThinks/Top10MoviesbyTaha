@@ -32,11 +32,30 @@ class Movie(db.Model):
     rating: Mapped[float] = mapped_column(Float, nullable=False)
     ranking: Mapped[int] = mapped_column(Integer, nullable=False)
     review: Mapped[str] = mapped_column(String(250), nullable=False)
-    image_url: Mapped[str] = mapped_column(String(250), nullable=False)
+    img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
     # Optional: this will allow each book object to be identified by its title when printed.
     def __repr__(self):
         return f'<Movie {self.title}>'
+
+
+# Create table schema in the database. Requires application context.
+with app.app_context():
+    db.create_all()
+
+with app.app_context():
+    # new_movie = Movie(
+    #     title="Phone Booth",
+    #     year=2002,
+    #     description="Publicist Stuart Shepard finds himself trapped in a phone booth, pinned down by an extortionist's sniper rifle. Unable to leave or receive outside help, Stuart's negotiation with the caller leads to a jaw-dropping climax.",
+    #     rating=7.3,
+    #     ranking=10,
+    #     review="My favourite character was the caller.",
+    #     img_url="https://image.tmdb.org/t/p/w500/tjrX2oWRCM3Tvarz38zlZM7Uc10.jpg"
+    # )
+    db.session.add(new_movie)
+    db.session.commit()
+
 
 @app.route("/")
 def home():
