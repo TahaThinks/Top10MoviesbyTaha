@@ -63,8 +63,8 @@ with app.app_context():
 def home():
     result = db.session.execute(db.select(Movie))
     all_movies = result.scalars().all()
-    print(all_movies)
-    return render_template("index.html")
+    # print(all_movies)
+    return render_template("index.html", movies=all_movies)
 
 
 
